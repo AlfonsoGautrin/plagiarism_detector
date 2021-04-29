@@ -1,0 +1,8 @@
+Include/
+Lib/
+Scripts/
+
+.env
+db.sqlite3
+
+__pycache__/
