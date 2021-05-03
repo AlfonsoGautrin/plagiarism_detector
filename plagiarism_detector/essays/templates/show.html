@@ -15,9 +15,9 @@
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
 
-                 <h6 class="m-0 font-weight-bold text-primary">{{essay.title}}</h6>
+                 <h4 class="m-0 font-weight-bold text-primary">{{essay.title}}</h4>
 
-                <h6>{{essay.author}}</h6>
+                <h6>Autor : {{essay.author}}</h6>
 
 
             </div>
@@ -28,7 +28,7 @@
             <div class="py-3 d-flex flex-row align-items-center justify-content-between">
             <a class="btn btn-danger" href="{% url 'essays.index' %}">Volver</a>
 
-                <h6>{{essay.date}}</h6>
+                <h6>Subido el : {{essay.date}}</h6>
 
             </div>
             </div>

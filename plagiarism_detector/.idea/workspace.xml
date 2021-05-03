@@ -2,18 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9aaeb1a-bcce-4dce-ba51-3064dfd0aabd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/essays/templates/show.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/essays/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/essays/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/essays/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/essays/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/essays/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/essays/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/essays/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/essays/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plagiarism_detector/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/plagiarism_detector/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/essays/templates/form.html" beforeDir="false" afterPath="$PROJECT_DIR$/essays/templates/form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/essays/templates/show.html" beforeDir="false" afterPath="$PROJECT_DIR$/essays/templates/show.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/templates/sidebar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/templates/sidebar.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usuarios/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/usuarios/migrations/0001_initial.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/usuarios/migrations/0002_auto_20210502_1732.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/usuarios/migrations/0003_auto_20210502_1752.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,6 +69,7 @@
       <updated>1619659570058</updated>
       <workItem from="1619659571545" duration="10786000" />
       <workItem from="1620017003837" duration="10406000" />
+      <workItem from="1620036435805" duration="356000" />
     </task>
     <servers />
   </component>
@@ -93,5 +86,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
