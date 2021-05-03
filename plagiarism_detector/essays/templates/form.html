@@ -1,0 +1,52 @@
+{% extends "main.html" %}
+
+
+  {% block main-content %}
+
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">{{ title }}</h1>
+    </div>
+
+   <form action="{% url 'essays.save' %}" method="POST">
+       {% csrf_token %}
+
+       <input type="hidden" name="essay_id" value="{{ index }}">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="title"
+                        placeholder="Ingresa titulo" value="{{essay.title}}">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control form-control-user" name="author"
+                        placeholder="Ingresa autor" value="{{essay.author}}">
+                </div>
+            
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+            <textarea name="content">{{essay.content}}</textarea>
+
+            <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+            <button class="btn btn-success" type="submit">Guardar</button>
+
+                  <h6>{{essay.date}}</h6>
+            
+            </div>
+            </div>
+        </div>
+   </form>
+
+</div>
+
+
+
+
+{% endblock %}
+
+

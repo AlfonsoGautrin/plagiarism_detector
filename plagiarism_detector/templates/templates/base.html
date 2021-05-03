@@ -25,15 +25,12 @@
       <!-- Custom styles for this page -->
     <link href="{% static 'vendor/datatables/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
 
-</head>
 
-<body id="page-top">
+    <!-- my styles for this template-->
+    <link rel="stylesheet" href="{% static 'css/app.css'  %}">
 
-{% block content %}
 
-{% endblock %}
-
-    <!-- Bootstrap core JavaScript-->
+       <!-- Bootstrap core JavaScript-->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
     <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
@@ -46,6 +43,35 @@
     <!-- Page level plugins -->
     <script src="{% static 'vendor/datatables/jquery.dataTables.min.js' %}"></script>
     <script src="{% static 'vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    
+
+</head>
+
+<body id="page-top">
+
+{% block content %}
+
+{% endblock %}
+
+
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+           <script >
+               Swal.fire({
+                   "title" : "{{ message }}",
+                   "icon"  : "success"
+               })
+           </script>
+
+        {% endfor %}
+
+    {% endif %}
 
 
 
