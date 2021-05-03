@@ -6,3 +6,9 @@ textarea{
     width: 100%;
     height: 450px;
 }
+
+.custom-image{
+    background: url("https://images.pexels.com/photos/4049870/pexels-photo-4049870.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=600&w=800");
+    background-position: center;
+    background-size: cover;
+}
