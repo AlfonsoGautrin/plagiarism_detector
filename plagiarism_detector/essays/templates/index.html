@@ -9,7 +9,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Mis Ensayos</h1>
-        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="{% url 'essays.create'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus text-white-50" style="margin-right: 15px"> </i>Crear Nuevo
         </a>
     </div>
@@ -17,40 +17,40 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Se muestra un listado de ensayos</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" >
+                <table class="table table-bordered tableEssays" id="dataTable" >
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th style="width: 50px">#</th>
                         <th>Titulo</th>
+                        <th>Autor</th>
                         <th>Subido el</th>
-                        <th>Acciones</th>
+                        <th style="width: 100px">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-
-                    </tr>
-                    <tr>
-                        <td>Ashton Cox</td>
-                        <td>Junior Technical Author</td>
-                        <td>San Francisco</td>
-                        <td>66</td>
-                    </tr>
+                    {% for essay in essays %}
+                        <tr>
+                            <td>{{ essay.id }}</td>
+                            <td>{{ essay.title }}</td>
+                            <td>{{ essay.author }}</td>
+                            <td>{{ essay.date }}</td>
+                            <td>
+                                 <a href="{% url 'essays.show' essay.id  %}" class="btn btn-primary  btn-sm">
+                                        <i class="fas fa-eye"></i>
+                                 </a>
+                                <a href="{% url 'essays.edit' essay.id  %}" class="btn btn-warning  btn-sm">
+                                        <i class="fas fa-pen"></i>
+                                 </a>
+                                 <button class="btn btn-danger btn-sm btnDelete" essay_id="{{essay.id}}">
+                                        <i class="fas fa-trash"></i>
+                                 </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -61,8 +61,61 @@
   <script>
 
       document.addEventListener("DOMContentLoaded", function(event) {
-            $('#dataTable').DataTable();
+            $('#dataTable').DataTable({
+                language : {
+                    sProcessing: "Procesando...",
+                    sLengthMenu: "Mostrar _MENU_ registros",
+                    sZeroRecords: "No se encontraron resultados",
+                    sEmptyTable: "Ningún dato disponible en esta tabla",
+                    sInfo: "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    sInfoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+                    sInfoPostFix: "",
+                    sSearch: "Buscar:",
+                    sUrl: "",
+                    sInfoThousands: ",",
+                    sLoadingRecords: "Cargando...",
+                    oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Último",
+                    sNext: "Siguiente",
+                    sPrevious: "Anterior"
+                    },
+                    oAria: {
+                    sSortAscending: ": Activar para ordenar la columna de manera ascendente",
+                    sSortDescending: ": Activar para ordenar la columna de manera descendente"
+                    },
+                    buttons: {
+                    copy: "Copiar",
+                    colvis: "Visibilidad"
+                    }
+                }
+            });
       });
+
+      $(".tableEssays tbody").on("click","button.btnDelete",function(){
+
+            const essay_id = $(this).attr("essay_id");
+            swal.fire({
+                title: '¿Estas seguro de eliminar este Ensayo?',
+                text: "¡Si no lo estas puedes cancelar!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Si, estoy seguro'
+            }).then((result)=>
+            {
+                  if (result.value)
+                  {
+                    window.location = `/essays/delete/${essay_id}`;
+                  }
+            });
+
+
+      });
+
 
   </script>
 
