@@ -3,8 +3,8 @@ from usuarios import views
 
 
 
+
 urlpatterns = [
-    path('accounts/', include('django.contrib.auth.urls')),
- 
-    path('registro/', views.registro.as_view(), name = 'registro')
+    
+    path('signup/', views.SignUpView, name="signup")
 ]
