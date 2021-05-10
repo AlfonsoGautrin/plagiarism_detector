@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'essays',
     'templates',
     'usuarios',
+    'task_group',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
