@@ -12,7 +12,7 @@ class Rol(models.Model) :
 
 class Usuario(AbstractUser) :
 
-    foto     = models.ImageField(unique=False)
+    photo     = models.ImageField(unique=False)
     username = models.CharField(unique=True, default='Nombre', max_length=50)
     email    = models.EmailField(unique=True)
     rol      = models.ForeignKey(Rol, on_delete = models.PROTECT, default=2)
@@ -20,5 +20,7 @@ class Usuario(AbstractUser) :
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
     
+    def __str__(self):
 
+        return f'ID: {self.id} NOMBRE: {self.username} Correo: {self.email}'
 

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 
@@ -128,8 +129,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#URLs que usa el login y el logout
 LOGIN_REDIRECT_URL = '/essays'
 LOGOUT_REDIRECT_URL = 'login'
+
+#URL Para acceder a las imagenes
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#URL De donde se almacenan las imagnes
 
 
 # Default primary key field type

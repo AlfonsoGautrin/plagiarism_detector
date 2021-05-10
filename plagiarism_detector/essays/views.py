@@ -17,59 +17,74 @@ def index(request):
 
 
 def create(request):
-    return render(request, 'form.html', {
-        'title': 'Crear Ensayo',
-        'index': -1
-    })
+    if request.user.is_authenticated :
+        return render(request, 'form.html', {
+            'title': 'Crear Ensayo',
+            'index': -1
+        })
+    else :
+        return redirect('login')
 
 
 def edit(request, essay_index: int):
-    essay = Essay.objects.get(id=essay_index)
-    return render(request, 'form.html', {
-        'title': 'Editar Ensayo',
-        'essay': essay,
-        'index': essay_index
-    })
+    if request.user.is_authenticated :
+        essay = Essay.objects.get(id=essay_index)
+        return render(request, 'form.html', {
+            'title': 'Editar Ensayo',
+            'essay': essay,
+            'index': essay_index
+        })
+    else :
+        return redirect('login')
 
 
 def delete(request, essay_index: int):
-    instance = Essay.objects.get(id=essay_index)
-    instance.delete()
-    messages.success(request, 'Ensayo Eliminado Correctamente')
-    return redirect('essays.index')
+    if request.user.is_authenticated :
+        instance = Essay.objects.get(id=essay_index)
+        instance.delete()
+        messages.success(request, 'Ensayo Eliminado Correctamente')
+        return redirect('essays.index')
+    else :
+        return redirect('login')
 
 
 def show(request, essay_index: int):
-    instance = Essay.objects.get(id=essay_index)
-    return render(request, 'show.html', {
-        'title': 'Detalle de Ensayo',
-        'essay': instance,
-        'index': essay_index
-    })
+    if request.user.is_authenticated :
+        instance = Essay.objects.get(id=essay_index)
+        return render(request, 'show.html', {
+            'title': 'Detalle de Ensayo',
+            'essay': instance,
+            'index': essay_index
+        })
+    else :
+        return redirect('login')
 
 
 def save(request):
-    id = int(request.POST['essay_id'])
-    now = datetime.date.today()
-    if id == -1:
+    if request.user.is_authenticated :
+        id = int(request.POST['essay_id'])
+        now = datetime.date.today()
+        if id == -1:
 
-        essay = Essay(
-            title=request.POST['title'],
-            author=request.POST['author'],
-            content=request.POST['content'],
-            date=now
-        )
+            essay = Essay(
+                title=request.POST['title'],
+                author=request.POST['author'],
+                content=request.POST['content'],
+                date=now
+            )
 
-        essay.save()
-        messages.success(request, 'Ensayo Creado Correctamente')
+            essay.save()
+            messages.success(request, 'Ensayo Creado Correctamente')
 
-    else:
-        essay = Essay.objects.get(id=id)
-        essay.title = request.POST['title'],
-        essay.author = request.POST['author'],
-        essay.content = request.POST['content'],
-        essay.date = now
-        essay.save()
-        messages.success(request, 'Ensayo Editado Correctamente')
+        else:
+            essay = Essay.objects.get(id=id)
+            essay.title = request.POST['title'],
+            essay.author = request.POST['author'],
+            essay.content = request.POST['content'],
+            essay.date = now
+            essay.save()
+            messages.success(request, 'Ensayo Editado Correctamente')
 
-    return redirect('essays.index')
+        return redirect('essays.index')
+    else :
+        return redirect('login')

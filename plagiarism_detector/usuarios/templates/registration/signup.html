@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+        <div class="col-xl-10 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="card-body p-0">
+                    <!-- Nested Row within Card Body -->
+                    <div class="row">
+                        <div class="col-lg-6 d-none d-lg-block custom-image"></div>
+                        <div class="col-lg-6">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Crear cuenta nueva</h1>
+                                </div>
+                                 <form action="" method="post" class="user">
+                                    {% csrf_token %}
+                                    {% if error %}
+                                    <div class="form-group">
+                                        <input type="email" name="email" class="form-control form-control-user"
+                                            id="id_email" aria-describedby="emailHelp" value="{{email}}"
+                                            placeholder="Correo Electronico" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="username" maxlength="50" class="form-control form-control-user"
+                                            id="id_username" aria-describedby="emailHelp" value="{{username}}"
+                                            placeholder="Nombre de usuario" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="first_name" maxlength="50" class="form-control form-control-user"
+                                            id="id_first_name" aria-describedby="emailHelp" value="{{first_name}}"
+                                            placeholder="Tu nombre" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="last_name" maxlength="50" class="form-control form-control-user"
+                                            id="id_last_name" aria-describedby="emailHelp" value="{{last_name}}"
+                                            placeholder="Apellidos" required>
+                                    </div>
+                                    
+                                    {% else %}
+                                    <div class="form-group">
+                                        <input type="email" name="email" class="form-control form-control-user"
+                                            id="id_email" aria-describedby="emailHelp"
+                                            placeholder="Correo Electronico" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="username" maxlength="50" class="form-control form-control-user"
+                                            id="id_username" aria-describedby="emailHelp"
+                                            placeholder="Nombre de usuario" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="first_name" maxlength="50" class="form-control form-control-user"
+                                            id="id_first_name" aria-describedby="emailHelp"
+                                            placeholder="Tu nombre" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="last_name" maxlength="50" class="form-control form-control-user"
+                                            id="id_last_name" aria-describedby="emailHelp"
+                                            placeholder="Apellidos" required>
+                                    </div>
+                                    {% endif %}
+                                    <div class="form-group">
+                                        <input type="password" name="password1" autocomplete="new-password" required id="id_password1" class="form-control form-control-user"
+                                             placeholder="Contraseña" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="password2" autocomplete="new-password" required id="id_password2" class="form-control form-control-user"
+                                            placeholder="Repite la Contraseña" required>
+                                    </div>
+                                    <div class="form-group">
+                                    </div>
+                                    {% if error %}
+                                    <p style="color:red">{{error_message}}</p>
+                                    {% endif %}
+                                    <input type="submit" value="Crear Cuenta" class="btn btn-primary btn-user btn-block">
+                                    <hr>
+                                </form>
+                                <div class="text-center">
+                                    <a class="small" href="{% url 'login'%}">¿Ya tienes cuenta?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script >
+  document.getElementById('page-top').classList.add('bg-gradient-primary')
+</script>
+
+{% endblock %}
