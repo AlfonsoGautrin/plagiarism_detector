@@ -11,6 +11,6 @@ def index(request):
         #    'essays': essays
         #})
 
-        return render(request,'task_group_index.html')
+        return render(request,'demo.html')
     else:
         return redirect('login')
