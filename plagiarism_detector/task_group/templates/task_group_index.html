@@ -9,7 +9,7 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Mis Grupos de Tareas</h1>
-        <a href="{% url 'essays.create'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <a href="{% url 'task_group.create'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
             <i class="fas fa-plus text-white-50" style="margin-right: 15px"> </i>Crear Nuevo
         </a>
     </div>
@@ -21,7 +21,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered tableEssays" id="dataTable" >
+                <table class="table table-bordered tableGroups" id="dataTable" >
                     <thead>
                     <tr>
                         <th style="width: 50px">#</th>
@@ -31,28 +31,22 @@
                     </tr>
                     </thead>
                     <tbody>
-                  <!--   {% for essay in essays %}
+                    {% for group in groups %}
                         <tr>
-                            <td>{{ essay.id }}</td>
-                            <td>{{ essay.title }}</td>
-                            <td>{{ essay.author }}</td>
-                            <td>{{ essay.date }}</td>
+                            <td>{{ group.id }}</td>
+                            <td>{{ group.name }}</td>
+                            <td>{{ group.created_at }}</td>
                             <td>
-                                 <a href="#" class="btn btn-success  btn-sm">
-                                        <i class="fas fa-check"></i>
-                                 </a>
-                                 <a href="{% url 'essays.show' essay.id  %}" class="btn btn-primary  btn-sm">
-                                        <i class="fas fa-eye"></i>
-                                 </a>
-                                <a href="{% url 'essays.edit' essay.id  %}" class="btn btn-warning  btn-sm">
+                                
+                                <a href="{% url 'task_group.edit' group.id  %}" class="btn btn-warning  btn-sm">
                                         <i class="fas fa-pen"></i>
                                  </a>
-                                 <button class="btn btn-danger btn-sm btnDelete" essay_id="{{essay.id}}">
+                                 <button class="btn btn-danger btn-sm btnDelete" group_id="{{group.id}}">
                                         <i class="fas fa-trash"></i>
                                  </button>
                             </td>
                         </tr>
-                    {% endfor %} -->
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -96,11 +90,11 @@
             });
       });
 
-      $(".tableEssays tbody").on("click","button.btnDelete",function(){
+      $(".tableGroups tbody").on("click","button.btnDelete",function(){
 
-            const essay_id = $(this).attr("essay_id");
+            const group_id = $(this).attr("group_id");
             swal.fire({
-                title: '¿Estas seguro de eliminar este Ensayo?',
+                title: '¿Estas seguro de eliminar este Grupo de Tareas?',
                 text: "¡Si no lo estas puedes cancelar!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -112,7 +106,7 @@
             {
                   if (result.value)
                   {
-                    window.location = `/essays/delete/${essay_id}`;
+                    window.location = `/task-group/delete/${group_id}`;
                   }
             });
 
