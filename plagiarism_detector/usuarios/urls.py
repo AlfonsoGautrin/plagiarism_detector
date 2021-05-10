@@ -6,5 +6,7 @@ from usuarios import views
 
 urlpatterns = [
     
-    path('signup/', views.SignUpView, name="signup")
+    path('signup/', views.SignUpView, name="signup"),
+    path('profile/', views.profile_view, name="profile"),
+
 ]
