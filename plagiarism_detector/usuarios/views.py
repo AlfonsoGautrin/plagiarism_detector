@@ -92,6 +92,8 @@ def send_error_message(error_message, email, username, first_name, last_name, re
     return render(request, url, data)
 
 
+def profile_view(request) :
+    return render(request, 'profile.html')
 
 
 

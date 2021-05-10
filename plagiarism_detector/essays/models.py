@@ -13,3 +13,7 @@ def getDateFormated(self):
     return self.date.strftime(' %d-%m-%Y')
 
 
+class EssayPlagiarism(models.Model) :
+    essays   = models.ManyToManyField(Essay)
+    essayAVG = models.DecimalField(max_digits=100, decimal_places=2)
+    date     = models.DateField()

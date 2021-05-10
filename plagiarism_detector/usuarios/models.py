@@ -12,7 +12,7 @@ class Rol(models.Model) :
 
 class Usuario(AbstractUser) :
 
-    photo     = models.ImageField(unique=False)
+    image    = models.ImageField(unique=False)
     username = models.CharField(unique=True, default='Nombre', max_length=50)
     email    = models.EmailField(unique=True)
     rol      = models.ForeignKey(Rol, on_delete = models.PROTECT, default=2)
