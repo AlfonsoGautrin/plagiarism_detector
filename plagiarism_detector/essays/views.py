@@ -7,12 +7,12 @@ from .models import Essay
 # Create your views here.
 
 def index(request):
-    if request.user.is_authenticated :
+    if request.user.is_authenticated:
         essays = Essay.objects.all()
         return render(request, 'index.html', {
             'essays': essays
         })
-    else :
+    else:
         return redirect('login')
 
 
