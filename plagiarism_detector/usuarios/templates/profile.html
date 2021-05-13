@@ -124,7 +124,8 @@
                 </div>
               </div>
               <div class="card-body">
-                <form>
+                <form action="{% url 'profile' %}" method="POST">
+                  {% csrf_token %}
                   <h6 class="heading-small text-muted mb-4">Informacion</h6>
                   <form action="">
                     <div class="pl-lg-4">
@@ -132,13 +133,14 @@
                         <div class="col-lg-6">
                           <div class="form-group">
                             <label class="form-control-label" for="input-username">Nombre de usuario</label>
-                            <input type="text" id="input-username" class="form-control" placeholder="Username" value="{{user.username}}">
+                            <input type="text" id="id_username" name="username" class="form-control" placeholder="Nombre de usuario" value="{{user.username}}" required>
                           </div>
                         </div>
                         <div class="col-lg-6">
                           <div class="form-group">
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
                             <label class="form-control-label" for="input-email">Correo</label>
-                            <input type="email" id="input-email" class="form-control" placeholder="jesse@example.com" value="{{user.email}}">
+                            <input type="email" id="id_email" name="email" class="form-control" placeholder="jesse@example.com" value="{{user.email}}" required>
                           </div>
                         </div>
                       </div>
@@ -146,16 +148,22 @@
                         <div class="col-lg-6">
                           <div class="form-group">
                             <label class="form-control-label" for="input-first-name">Nombre</label>
-                            <input type="text" id="input-first-name" class="form-control" placeholder="Nombre" value="{{user.first_name}}">
+                            <input type="text" id="id_first_name" name="first_name" class="form-control" placeholder="Nombre" value="{{user.first_name}}" required>
                           </div>
                         </div>
                         <div class="col-lg-6">
                           <div class="form-group">
                             <label class="form-control-label" for="input-last-name">Apellidos</label>
-                            <input type="text" id="input-last-name" class="form-control" placeholder="Apellidos" value="{{user.last_name}}">
+                            <input type="text" id="id_last_name" name="last_name" class="form-control" placeholder="Apellidos" value="{{user.last_name}}" required>
                           </div>
                         </div>
                       </div>
+                      {% if error %}
+                        <p style="color:red">{{error_message}}</p>
+                      
+                      {% else %}
+                      <p style="color: #00ff00">{{error_message}}</p> 
+                      {% endif %}
                     </div>
                     <hr class="my-4" />
                     <div class="row">
