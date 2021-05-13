@@ -1,4 +1,5 @@
 from django.db import models
+from task_group.models import TaskGroup
 
 
 # Create your models here.
@@ -7,6 +8,7 @@ class Essay(models.Model):
     content = models.CharField(max_length=9000)
     author = models.CharField(max_length=200)
     date = models.DateField(null=True, blank=True)
+    task_group = models.ForeignKey(TaskGroup, null=False, on_delete=models.PROTECT, default=-1)
 
 
 def getDateFormated(self):

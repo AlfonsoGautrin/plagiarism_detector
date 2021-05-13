@@ -87,9 +87,11 @@
               <div class="row justify-content-center">
                 <div class="col-lg-3 order-lg-2">
                   <div class="card-profile-image">
-                    <a href="#">
+                    {% if user.image == '' %}
                       <img src="{% static 'img/default-user.png' %}" class="rounded-circle">
-                    </a>
+                    {% else %}
+                      <img src="{{user.image.url}}" class="rounded-circle image-perfil">
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -124,7 +126,7 @@
                 </div>
               </div>
               <div class="card-body">
-                <form action="{% url 'profile' %}" method="POST">
+                <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
                   {% csrf_token %}
                   <h6 class="heading-small text-muted mb-4">Informacion</h6>
                   <form action="">
@@ -158,6 +160,8 @@
                           </div>
                         </div>
                       </div>
+                      <label class="form-control-label" for="input-last-name">Imagen</label>
+                      <input type="file" name="image" id="id_image" value="Agregar Imgen" required>
                       {% if error %}
                         <p style="color:red">{{error_message}}</p>
                       

@@ -10130,6 +10130,15 @@ a:focus {
   width: 2rem;
 }
 
+.image-perfil {
+  height: auto;
+  width: auto;
+  max-height: 150px;
+  max-width: 150px;
+  border-color: green;
+  border-width: 100px;
+}
+
 .topbar {
   height: 4.375rem;
 }

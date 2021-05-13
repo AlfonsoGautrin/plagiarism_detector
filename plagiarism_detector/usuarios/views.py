@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 from usuarios.models import Usuario
 
@@ -107,6 +108,7 @@ def update_user(request) :
     first_name = request.POST['first_name']
     last_name  = request.POST['last_name']
     email = email.lower()
+    image = request.FILES['image']
     user = Usuario.objects.filter(id=user_id)[0]
    
     #Valida que el correo ingresado no sea igual al que ya le pertenecia
@@ -151,18 +153,17 @@ def update_user(request) :
     user.username   = username
     user.first_name = first_name.capitalize()
     user.last_name  = capitalize_last_name(last_name)
+   
+    print(image)
+    
+    
+    user.image=image
     user.save()
     request.user.email      = email
     request.user.username   = username
     request.user.first_name = first_name.capitalize()
     request.user.last_name  = capitalize_last_name(last_name)
     return render(request, 'profile.html', {'error':False, 'error_message' : 'Datos actualizados',})
-    
-"""
-
-
-def add_image(request) :
-    image = request.FILES """
 
 
 """ def update_password(request) :

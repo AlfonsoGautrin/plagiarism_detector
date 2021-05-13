@@ -1,3 +1,4 @@
+from PIL import Image
 from django.db import models
 from django.contrib.auth.models import AbstractUser#ALFONSO G: AbstractBaseUser es el padre de la clase usuario que incluye Django
 
@@ -12,7 +13,7 @@ class Rol(models.Model) :
 
 class Usuario(AbstractUser) :
 
-    image    = models.ImageField(unique=False)
+    image    = models.ImageField(upload_to = 'users_images',unique=False,)
     username = models.CharField(unique=True, default='Nombre', max_length=50)
     email    = models.EmailField(unique=True)
     rol      = models.ForeignKey(Rol, on_delete = models.PROTECT, default=2)
@@ -22,5 +23,6 @@ class Usuario(AbstractUser) :
     
     def __str__(self):
 
-        return f'ID: {self.id} NOMBRE: {self.username} Correo: {self.email}'
+        return f'ID: {self.id} NOMBRE: {self.username} Correo: {self.email} Imagen: {self.image}'
 
+   
