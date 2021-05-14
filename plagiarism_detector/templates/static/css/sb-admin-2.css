@@ -10130,15 +10130,6 @@ a:focus {
   width: 2rem;
 }
 
-.image-perfil {
-  height: auto;
-  width: auto;
-  max-height: 150px;
-  max-width: 150px;
-  border-color: green;
-  border-width: 100px;
-}
-
 .topbar {
   height: 4.375rem;
 }
@@ -11250,4 +11241,27 @@ footer.sticky-footer .copyright {
 
 body.sidebar-toggled footer.sticky-footer {
   width: 100%;
+}
+
+
+input[type="file"] {
+  display: none;
+}
+
+#label_image {
+  color:white;
+  height: 60px;
+  width: 250px;
+  background-color: red;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
 }

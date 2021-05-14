@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
@@ -98,17 +99,15 @@ def profile_view(request) :
     return render(request, 'profile.html', {'error' : False, 'error_message' : '',  })
 
 
-
-
-
 def update_user(request) :
+    print('dentro del update')
     user_id    = request.POST['user_id']
     email      = request.POST['email']
     username   = request.POST['username']
     first_name = request.POST['first_name']
     last_name  = request.POST['last_name']
     email = email.lower()
-    image = request.FILES['image']
+
     user = Usuario.objects.filter(id=user_id)[0]
    
     #Valida que el correo ingresado no sea igual al que ya le pertenecia
@@ -153,11 +152,7 @@ def update_user(request) :
     user.username   = username
     user.first_name = first_name.capitalize()
     user.last_name  = capitalize_last_name(last_name)
-   
-    print(image)
     
-    
-    user.image=image
     user.save()
     request.user.email      = email
     request.user.username   = username
@@ -166,17 +161,44 @@ def update_user(request) :
     return render(request, 'profile.html', {'error':False, 'error_message' : 'Datos actualizados',})
 
 
-""" def update_password(request) :
+def update_password(request) :
     password1 = request.POST['password1']
     password2 = request.POST['password2']
-
+    password  = request.POST['password']
     if not check_passwords(password1, password2) :
         error = 'Las contraseñas no coinciden'
+        return render(request, 'profile.html', {'update_password_message': error, 'upadate_password' : False})
     
+ 
+    
+
     user_id = request.POST['user_id']
+    user = Usuario.objects.filter(id=user_id)[0]
 
-    user = Usuario.objects.filter(id=user_id)
+    if not user.check_password(password) :
+        error = 'Contraseña actual incorrecta'
+        return render(request, 'profile.html', {'update_password_message': error, 'upadate_password' : False})
 
-    user.password=Usuario.set_password(self, password1)
-    user.save
-    return """
+    user.set_password(password1)
+    user.save()
+    request.user.email      = user.email 
+    request.user.id         = user.id
+    request.user.username   = user.username 
+    request.user.first_name = user.first_name
+    request.user.last_name  = user.last_name
+    request.user.image      = user.image
+    return render(request, 'profile.html', {'update_password_message' : 'Contraseña actualizada', 'upadate_password' : True })
+
+def update_image(request) :
+    image = request.FILES['image']
+    user_id = request.POST['user_id']
+    user = Usuario.objects.filter(id=user_id)[0]
+    user.image=image
+    user.save()
+    request.user.email      = user.email 
+    request.user.id         = user.id
+    request.user.username   = user.username 
+    request.user.first_name = user.first_name
+    request.user.last_name  = user.last_name
+    request.user.image      = user.image
+    return render(request, 'profile.html',)

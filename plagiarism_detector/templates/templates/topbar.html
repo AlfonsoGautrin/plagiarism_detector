@@ -18,9 +18,9 @@
                 
 
                 {% if user.image == '' %}
-                      <img src="{% static 'img/default-user.png' %}" class="rounded-circle img-profile ">
+                      <img src="{% static 'img/default-user.png' %}" class="rounded-circle img-profile" >
                     {% else %}
-                      <img src="{{user.image.url}}" class="rounded-circle img-profile">
+                      <img src="{{user.image.url}}" class="rounded-circle img-profile" style="height: 40px; width: 40px;">
                 {% endif %}
             </a>
 
