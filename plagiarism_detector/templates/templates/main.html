@@ -48,12 +48,11 @@
                 <div class="modal-body">Selecciona "salir" si usted esta listo para cerrar la sesión.</div>
                 <div class="modal-footer">
                     <button class="btn btn-danger" type="button" data-dismiss="modal">cancelar</button>
-                    <a class="btn btn-primary" href="#">salir</a>
+                    <a class="btn btn-primary" href="{% url 'logout' %}">salir</a>
                 </div>
             </div>
         </div>
     </div>
-
 
 {% endblock %}
 

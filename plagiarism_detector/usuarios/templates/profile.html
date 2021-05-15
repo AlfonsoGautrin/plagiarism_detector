@@ -1,0 +1,317 @@
+{% extends "main.html" %}
+
+
+  {% block main-content %}
+
+  {% load static %}
+
+
+<style>
+    .rounded-circle,
+    .avatar.rounded-circle img
+    {
+        border-radius: 50% !important;
+    }
+
+    .card-profile-image
+    {
+        position: relative;
+    }
+    .card-profile-image img
+    {
+        position: absolute;
+        left: 50%;
+
+        max-width: 140px;
+
+        transition: all .15s ease; 
+        transform: translate(-50%, -50%) scale(1);
+
+        border: 3px solid #fff;
+        border-radius: .375rem;
+    }
+    .card-profile-image img:hover
+    {
+        transform: translate(-50%, -50%) scale(1.03);
+    }
+    
+
+    
+    .card-profile-stats
+    {
+        padding: 1rem 0;
+    }
+    .card-profile-stats > div
+    {
+        margin-right: 1rem;
+        padding: .875rem; 
+
+        text-align: center;
+    }
+    .card-profile-stats > div:last-child
+    {
+        margin-right: 0;
+    }
+    .card-profile-stats > div .heading
+    {
+        font-size: 1.1rem;
+        font-weight: bold;
+
+        display: block;
+    }
+    .card-profile-stats > div .description
+    {
+        font-size: .875rem;
+
+        color: #adb5bd;
+    }
+
+
+
+    .btn-input-file {
+      display: block;
+      padding: 10px 21px;
+      border: none;
+      color: #fff;
+      font-size: 18px;
+      background-color: #4e73df;
+      border-radius: 3px;
+      cursor: pointer;
+      border-bottom: 3px solid #237085;
+      font-family: sans-serif;
+      text-align: center;
+      height: 100px;
+      width: 180px;
+    }
+
+    .btn-input-file:hover {
+      transition: all .4s;
+      background-color: #2e59d9;
+    }
+
+
+</style>
+
+  
+<div class="container-fluid">
+    
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Mi Perfil</h1>
+        <a href="{% url 'essays.create'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-plus text-white-50" style="margin-right: 15px"> </i>Agregar nuevo ensayo
+        </a>
+    </div>
+
+     <!-- Page content -->
+     <div class="container-fluid mt--6">
+        <div class="row">
+          <div class="col-xl-4 order-xl-2">
+            <div class="card card-profile">
+              <img src="{% static 'img/nature.jpg' %}" alt="Image placeholder" class="card-img-top">
+              <div class="row justify-content-center">
+                <div class="col-lg-3 order-lg-2">
+                  <div class="card-profile-image">
+                    {% if user.image == '' %}
+                      <img src="{% static 'img/default-user.png' %}" class="rounded-circle">
+                    {% else %}
+                      <img src="{{user.image.url}}" 
+                      style="height: auto;
+                      width: auto;
+                      max-height: 150px;
+                      max-width: 150px;">
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+                <div class="d-flex justify-content-between">
+                  <span></span>
+                  <span style="margin-bottom: 30px;"></span>
+                </div>
+              </div>
+              <div class="card-body pt-0">
+                <div class="text-center">
+                  <h5 class="h3">
+                    {{user.username}}<span class="font-weight-light"></span>
+                  </h5>
+                  <div class="h5 font-weight-300">
+                    <i class="ni location_pin mr-2"></i> {{user.first_name}} {{user.last_name}}
+                  </div>
+                  <div class="h5 font-weight-300">
+                    <i class="ni location_pin mr-2"></i> {{user.email}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="col-xl-8 order-xl-1">
+            <div class="card" >
+              <div class="card-header">
+                <div class="row align-items-center">
+                  <div class="col-8">
+                    <h3 class="mb-0">Editar Informacion</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <form action="{% url 'profile' %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <h6 class="heading-small text-muted mb-4">Informacion</h6>          
+                    <div class="pl-lg-4">
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-username">Nombre de usuario</label>
+                            <input type="text" id="id_username" name="username" class="form-control" placeholder="Nombre de usuario" value="{{user.username}}" required>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <label class="form-control-label" for="input-email">Correo</label>
+                            <input type="email" id="id_email" name="email" class="form-control" placeholder="jesse@example.com" value="{{user.email}}" required>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-first-name">Nombre</label>
+                            <input type="text" id="id_first_name" name="first_name" class="form-control" placeholder="Nombre" value="{{user.first_name}}" required>
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label class="form-control-label" for="input-last-name">Apellidos</label>
+                            <input type="text" id="id_last_name" name="last_name" class="form-control" placeholder="Apellidos" value="{{user.last_name}}" required>
+                          </div>
+                        </div>
+                      </div>
+                      {% if error %}
+                        <p style="color:red">{{error_message}}</p>
+                      
+                      {% else %}
+                      <p style="color: #00ff00">{{error_message}}</p> 
+                      {% endif %}
+                    </div>
+                   
+                      <button class="btn btn-primary" inputmode="POST">Editar Datos</button>
+                      <hr class="my-2" />
+                </form>
+                <div class="row">
+                  <form action="{% url 'update_password' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label class="form-control-label">Contraseña Actual</label>
+                              <input type="password" id="id_update_password" name="password" class="form-control" required>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label class="form-control-label">Contraseña Nueva</label>
+                              <input type="password" id="id_update_password1" name="password1" class="form-control" required>
+                            </div>
+                          </div>
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <label class="form-control-label">Repite la contraseña</label>
+                              <input type="password" id="id_update_password2" name="password2" class="form-control" required>
+                            </div>
+                          </div>
+
+                          <div class="col-lg-3">
+                            <div class="form-group">
+                              <input type="hidden" id="user_id" name="user_id" class="form-control"  value="{{user.id}}" required>
+                              <label class="form-control-label">- </label>
+                              <button class="btn btn-primary" inputmode="POST"  style="margin-top: 0px;">Cambiar Contraseña</button>    
+                            </div>
+                          </div>
+                         <div class="col-lg-12">
+                            <div class="form-group">
+                              {% if upadate_password %}
+                                <label class="form-control-label" style="color: #00ff00">{{update_password_message}}</label>       
+                              {% else %}
+                                <label  class="form-control-label" style="color:red">{{update_password_message}}</label>          
+                              {% endif %}
+                            </div>
+                          </div>
+                        </div>                        
+                    </div>        
+                  </form>
+                  
+                <form action="{% url 'update_image' %}" method="POST" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="col-lg-12 form-group" id='imagen-div'></div>
+                  <div class="row">
+                    <div class="col-lg-3" style="margin-right: 15px;">
+                          <div class="form-group">
+                            <input type="file" name="image" id="id_image_input" accept="image/*" required style="display: none;">
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            <button type="button" class="btn-input-file" onclick="document.getElementById('id_image_input').click()" >
+                              <i class="far fa-image fa-3x"></i><br>
+                              Subir Imagen</button> 
+                          </div>               
+                    </div>
+
+                    <div class="col-lg-6">
+                      
+                        <div id="preview">
+                      
+                        
+                      </div>               
+                    </div> 
+                    
+                  
+                  </div>
+                </form> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+<script>
+
+var img = true;
+
+  document.getElementById('id_image_input').onchange=function(e){
+      console.log('Dentro del metodo')
+      let reader=new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      reader.onload=function(){
+          let preview=document.getElementById('preview');
+              image=document.createElement('img');
+              image.src=reader.result;
+              image.style.height="250px";
+              image.style.border="dashed #4e73df" ;
+              image.style.borderWidth="7px"
+              preview.innerHTML='';
+              preview.append(image);
+
+          if(img) {
+            let imagen_div = document.getElementById('imagen-div');
+              boton = document.createElement("button");
+              boton.setAttribute("class", "btn btn-primary")
+              boton.setAttribute("inputmode", "POST")
+              boton.innerHTML="Guardar Imagen"
+              imagen_div.append(boton);
+              img = false
+          }
+      }
+  }
+  </script>
+  
+
+
+
+{% endblock %}
+
+

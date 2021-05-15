@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,17 +30,22 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
 # Application definition
 
 INSTALLED_APPS = [
+    'essays',
+    'templates',
+    'usuarios',
+    'task_group',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'essays',
-    'templates'
+
 ]
 
 MIDDLEWARE = [
@@ -101,6 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'usuarios.Usuario'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -121,7 +129,19 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#URLs que usa el login y el logout
+LOGIN_REDIRECT_URL = '/essays'
+LOGOUT_REDIRECT_URL = 'login'
+
+#URL Para acceder a las imagenes
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+#URL De donde se almacenan las imagnes
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
