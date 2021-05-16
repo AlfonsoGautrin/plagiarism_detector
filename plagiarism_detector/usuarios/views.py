@@ -98,9 +98,12 @@ def send_error_message(error_message, email, username, first_name, last_name, re
 
 
 def profile_view(request) :
-    if request.method == 'POST' :
-        return update_user(request)
-    return render(request, 'profile.html', {'error' : False, 'error_message' : '',  })
+    if request.user.is_authenticated:
+        if request.method == 'POST' :
+            return update_user(request)
+        return render(request, 'profile.html', {'error' : False, 'error_message' : '',  })
+    else :
+        return redirect('login')
 
 
 def update_user(request) :
