@@ -1,6 +1,7 @@
 Include/
 Lib/
 Scripts/
+media/
 
 .env
 db.sqlite3

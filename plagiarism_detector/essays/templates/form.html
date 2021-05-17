@@ -17,16 +17,32 @@
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <div class="form-group">
-                    <h5>Titulo</h5>
-                    <input type="text" class="form-control form-control-user" name="title"
-                        placeholder="Ingresa titulo" value="{{essay.title}}" style="width: 500px">
-                </div>
+               <div class="col-4">
+                    <div class="form-group">
+                        <h5>Titulo</h5>
+                        <input type="text" class="form-control form-control-user" name="title"
+                            placeholder="Ingresa titulo" value="{{essay.title}}">
+                    </div>
+               </div>
 
-                <div class="form-group">
-                     <h5>Autor</h5>
-                    <input type="text" class="form-control form-control-user" name="author"
-                        placeholder="Ingresa autor" value="{{essay.author}}" style="width: 500px">
+               <div class="col-4">
+                    <div class="form-group">
+                        <h5>Grupo de Tarea</h5>
+                            
+                        <select class="form-control" name="task_group" id="select" >
+                            {% for task_group in task_groups %}
+                            <option value="{{ task_group.id }}">{{ task_group.name }}</option>
+                            {% endfor %}
+                            </select>
+                </div>
+               </div>
+
+                <div class="col-4">
+                    <div class="form-group">
+                        <h5>Autor</h5>
+                       <input type="text" class="form-control form-control-user" name="author"
+                           placeholder="Ingresa autor" value="{{essay.author}}" >
+                   </div>
                 </div>
             
             </div>

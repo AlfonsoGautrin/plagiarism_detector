@@ -60,19 +60,23 @@ def save(request):
                 created_at=now,
             )
             task_group.save()
+            print(task_group.name)
+
             messages.success(request, 'Grupo de Tarea Creado Creada Correctamente')
 
         else:
             print(request.POST['name'])
-            task_group = TaskGroup.objects.get(id=id)
+            print("aqui es del request")
+            task_group = TaskGroup.objects.filter(id=id).first()
             print(task_group)
-            task_group.name = request.POST['name'],
-            task_group.created_at = now
+            task_group.name=request.POST['name'],
+            task_group.created_at=now
             task_group.save()
-            print(task_group)
             messages.success(request, 'Grupo de Tarea Editado Correctamente')
+            print(task_group.name)
 
         return redirect('task_group.index')
     else :
         return redirect('login')
 
+ 

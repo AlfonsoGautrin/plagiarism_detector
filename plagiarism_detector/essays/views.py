@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 import datetime
-from .models import Essay
+from .models import Essay,TaskGroup
 
 
 # Create your views here.
@@ -18,8 +18,10 @@ def index(request):
 
 def create(request):
     if request.user.is_authenticated :
+        task_groups = TaskGroup.objects.all()
         return render(request, 'form.html', {
             'title': 'Crear Ensayo',
+            'task_groups': task_groups,
             'index': -1
         })
     else :
@@ -29,9 +31,11 @@ def create(request):
 def edit(request, essay_index: int):
     if request.user.is_authenticated :
         essay = Essay.objects.get(id=essay_index)
+        task_groups = TaskGroup.objects.all()
         return render(request, 'form.html', {
             'title': 'Editar Ensayo',
             'essay': essay,
+            'task_groups': task_groups,
             'index': essay_index
         })
     else :
@@ -77,7 +81,7 @@ def save(request):
             messages.success(request, 'Ensayo Creado Correctamente')
 
         else:
-            essay = Essay.objects.get(id=id)
+            essay = Essay.objects.filter(id=id).first()
             essay.title = request.POST['title'],
             essay.author = request.POST['author'],
             essay.content = request.POST['content'],
