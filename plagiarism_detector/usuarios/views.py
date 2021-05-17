@@ -4,49 +4,53 @@ from django.core.files.storage import FileSystemStorage
 from django.urls import reverse_lazy
 from usuarios.models import Usuario
 
+
 # Create your views here.
 def SignUpView(request):
-    if request.method == 'POST' :
-        email      = request.POST['email']
-        username   = request.POST['username']
-        first_name = request.POST['first_name']
-        last_name  = request.POST['last_name']
-        password1  = request.POST['password1']
-        password2  = request.POST['password2']
-        email      = email.lower()
-        first_name = first_name.capitalize()
-        last_name  = capitalize_last_name(last_name)
+    if not request.user.is_authenticated:
+        if request.method == 'POST' :
+            email      = request.POST['email']
+            username   = request.POST['username']
+            first_name = request.POST['first_name']
+            last_name  = request.POST['last_name']
+            password1  = request.POST['password1']
+            password2  = request.POST['password2']
+            email      = email.lower()
+            first_name = first_name.capitalize()
+            last_name  = capitalize_last_name(last_name)
 
-        url = 'registration/signup.html'
+            url = 'registration/signup.html'
 
-        if not check_passwords(password1, password2) :
-            error_message = 'Las contraseñas no coinciden'
-            return send_error_message(error_message, email, username, first_name, last_name, request, url)
+            if not check_passwords(password1, password2) :
+                error_message = 'Las contraseñas no coinciden'
+                return send_error_message(error_message, email, username, first_name, last_name, request, url)
 
-        if  email_exist(email) :
-            error_message = 'Ya existe una cuenta con la direccion de correo ingresada'
-            return send_error_message(error_message, email, username, first_name, last_name, request, url)
-            
+            if  email_exist(email) :
+                error_message = 'Ya existe una cuenta con la direccion de correo ingresada'
+                return send_error_message(error_message, email, username, first_name, last_name, request, url)
 
-        elif  username_exist(username) :
-            error_message = 'Ya existe una cuenta con ese nombre de usuario'
-            return send_error_message(error_message, email, username, first_name, last_name, request, url)
-        
-        elif check_space_empty(username) :
-            error_message = 'El nombre de usuario no puede contener espacios'
-            return send_error_message(error_message, email, username, first_name, last_name, request, url)
-        
-        
-        Usuario.objects.create_user(
-            email        = email,
-            username     = username,
-            first_name   = first_name,
-            last_name    = last_name,
-            password     = password1,
-            is_superuser = False
-        )
-        return redirect('login')
-    return render(request, 'registration/signup.html', {'error':False})
+
+            elif  username_exist(username) :
+                error_message = 'Ya existe una cuenta con ese nombre de usuario'
+                return send_error_message(error_message, email, username, first_name, last_name, request, url)
+
+            elif check_space_empty(username) :
+                error_message = 'El nombre de usuario no puede contener espacios'
+                return send_error_message(error_message, email, username, first_name, last_name, request, url)
+
+
+            Usuario.objects.create_user(
+                email        = email,
+                username     = username,
+                first_name   = first_name,
+                last_name    = last_name,
+                password     = password1,
+                is_superuser = False
+            )
+            return redirect('login')
+        return render(request, 'registration/signup.html', {'error':False})
+    else:
+        return redirect('essays.index')
 
 
 def check_passwords(password1, password2) :
@@ -94,9 +98,12 @@ def send_error_message(error_message, email, username, first_name, last_name, re
 
 
 def profile_view(request) :
-    if request.method == 'POST' :
-        return update_user(request)
-    return render(request, 'profile.html', {'error' : False, 'error_message' : '',  })
+    if request.user.is_authenticated:
+        if request.method == 'POST' :
+            return update_user(request)
+        return render(request, 'profile.html', {'error' : False, 'error_message' : '',  })
+    else :
+        return redirect('login')
 
 
 def update_user(request) :
