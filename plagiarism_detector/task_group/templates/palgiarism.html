@@ -93,30 +93,6 @@
             });
       });
 
-      $(".tableResults tbody").on("click","button.btnDelete",function(){
-
-            const essay_id = $(this).attr("essay_id");
-            swal.fire({
-                title: '¿Estas seguro de eliminar este Ensayo?',
-                text: "¡Si no lo estas puedes cancelar!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                cancelButtonText: 'Cancelar',
-                confirmButtonText: 'Si, estoy seguro'
-            }).then((result)=>
-            {
-                  if (result.value)
-                  {
-                    //window.location = `/essays/delete/${essay_id}`;
-                  }
-            });
-
-
-      });
-
-
   </script>
 
 

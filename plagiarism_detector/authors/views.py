@@ -64,7 +64,7 @@ def save(request):
 
         else:
             author = Author.objects.filter(id=id).first()
-            author.name=request.POST['name'],
+            author.name=request.POST['name']
             author.created_at=now
             author.save()
             messages.success(request, 'Autor Editado Correctamente')
