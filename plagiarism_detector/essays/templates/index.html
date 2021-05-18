@@ -27,6 +27,7 @@
                         <th style="width: 50px">#</th>
                         <th>Titulo</th>
                         <th>Autor</th>
+                        <th>Grupo de Tarea</th>
                         <th>Subido el</th>
                         <th style="width: 150px">Acciones</th>
                     </tr>
@@ -36,12 +37,10 @@
                         <tr>
                             <td>{{ essay.id }}</td>
                             <td>{{ essay.title }}</td>
-                            <td>{{ essay.author }}</td>
+                            <td>{{ essay.author.name }}</td>
+                            <td>{{ essay.task_group.name }}</td>
                             <td>{{ essay.date }}</td>
                             <td>
-                                 <a href="#" class="btn btn-success  btn-sm">
-                                        <i class="fas fa-check"></i>
-                                 </a>
                                  <a href="{% url 'essays.show' essay.id  %}" class="btn btn-primary  btn-sm">
                                         <i class="fas fa-eye"></i>
                                  </a>

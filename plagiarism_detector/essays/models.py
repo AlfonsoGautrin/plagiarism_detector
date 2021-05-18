@@ -1,14 +1,16 @@
 from django.db import models
 from task_group.models import TaskGroup
+from authors.models import Author
+
 
 
 # Create your models here.
 class Essay(models.Model):
     title = models.CharField(max_length=200)
     content = models.CharField(max_length=9000)
-    author = models.CharField(max_length=200)
+    author = models.ForeignKey(Author, null=False, on_delete=models.CASCADE, default=-1)
     date = models.DateField(null=True, blank=True)
-    task_group = models.ForeignKey(TaskGroup, null=False, on_delete=models.PROTECT, default=-1)
+    task_group = models.ForeignKey(TaskGroup, null=False, on_delete=models.CASCADE, default=-1)
 
 
 def getDateFormated(self):
@@ -16,6 +18,10 @@ def getDateFormated(self):
 
 
 class EssayPlagiarism(models.Model) :
-    essays   = models.ManyToManyField(Essay)
-    essayAVG = models.DecimalField(max_digits=100, decimal_places=2)
+    essay1   = models.IntegerField(null=True)
+    essay2   = models.IntegerField(null=True)
+    task_group = models.ForeignKey(TaskGroup, null=False, on_delete=models.CASCADE, default=-1)
+    plagiarism = models.DecimalField(max_digits=100, decimal_places=2)
     date     = models.DateField()
+    def get_plagiarism(self):
+        return f'{self.plagiarism * 100}%'

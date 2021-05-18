@@ -10,34 +10,33 @@
         <h1 class="h3 mb-0 text-gray-800">{{ title }}</h1>
     </div>
 
+   <form action="{% url 'authors.save' %}" method="POST">
+       {% csrf_token %}
 
+       <input type="hidden" name="author_id" value="{{ index }}">
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-
-                 <h4 class="m-0 font-weight-bold text-primary">{{essay.title}}</h4>
-
-               <div style="display: flex; flex-direction: column; text-align: right;">
-                    <h6><span style="font-weight: bold;">Autor:</span> {{essay.author.name}}</h6>
-                    <h6><span style="font-weight: bold;">Grupo de Tarea:</span> {{essay.task_group.name}}</h6>
-                    <h6><span style="font-weight: bold;">Subido el :</span>{{essay.date}}</h6>
-               </div>
-
-
+                <div class="col-12">
+                    <div class="form-group">
+                        <h5>Nombre</h5>
+                        <input type="text" class="form-control form-control-user" name="name"
+                            placeholder="Ingresa Nombre" value="{{author.name}}" >
+                    </div>
+                </div>
             </div>
             <!-- Card Body -->
             <div class="card-body">
-           {{essay.content}}
 
             <div class="py-3 d-flex flex-row align-items-center justify-content-between">
+            <button class="btn btn-success" type="submit">Guardar</button>
+
+                  <h6>{{author.created_at}}</h6>
             
-
-                
-
             </div>
             </div>
         </div>
-
+   </form>
 
 </div>
 
@@ -45,4 +44,5 @@
 
 
 {% endblock %}
+
 

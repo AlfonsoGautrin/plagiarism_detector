@@ -2,15 +2,27 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 import datetime
 from .models import TaskGroup
+from essays.models import EssayPlagiarism,Essay
 
 
 # Create your views here.
 
 def index(request):
     if request.user.is_authenticated:
+       
+        rows = []
         groups = TaskGroup.objects.all()
+
+        for group in groups:
+            essays = Essay.objects.filter(task_group=group.id)
+            rows.append({
+                'id':group.id,
+                'name': group.name,
+                'essays_size': len(essays),
+                'created_at': group.created_at
+            })
         return render(request, 'task_group_index.html', {
-            'groups': groups
+            'rows': rows
         })
     else:
         return redirect('login')
@@ -30,7 +42,7 @@ def edit(request, group_index: int):
     if request.user.is_authenticated :
         group = TaskGroup.objects.get(id=group_index)
         return render(request, 'task_group_form.html', {
-            'title': 'Editar Grupo de',
+            'title': 'Editar Grupo de Tareas',
             'group': group,
             'index': group_index
         })
@@ -41,6 +53,7 @@ def edit(request, group_index: int):
 def delete(request, group_index: int):
     if request.user.is_authenticated :
         instance = TaskGroup.objects.get(id=group_index)
+        EssayPlagiarism.objects.filter(task_group=group_index).delete()
         instance.delete()
         messages.success(request, 'Grupo de Tarea Eliminado Correctamente')
         return redirect('task_group.index')
@@ -60,23 +73,69 @@ def save(request):
                 created_at=now,
             )
             task_group.save()
-            print(task_group.name)
-
             messages.success(request, 'Grupo de Tarea Creado Creada Correctamente')
 
         else:
-            print(request.POST['name'])
-            print("aqui es del request")
             task_group = TaskGroup.objects.filter(id=id).first()
-            print(task_group)
             task_group.name=request.POST['name'],
             task_group.created_at=now
             task_group.save()
             messages.success(request, 'Grupo de Tarea Editado Correctamente')
-            print(task_group.name)
-
         return redirect('task_group.index')
     else :
         return redirect('login')
+
+def verify(request,group_index: int):
+    EssayPlagiarism.objects.all().delete()
+    task_group = TaskGroup.objects.filter(id=group_index).first()
+    essays = Essay.objects.filter(task_group=group_index)
+    now = datetime.date.today()
+    for essay in essays:
+        for essay2 in essays:
+            if essay.id != essay2.id:
+                avg = compute_jaccard(essay.content,essay2.content)
+                if avg >= 0.0:
+                    plagiarism = EssayPlagiarism(
+                        essay1=essay.id,
+                        essay2=essay2.id,
+                        task_group=task_group,
+                        plagiarism=avg,
+                        date=now,
+                    )
+                    plagiarism.save()
+    
+    results = []
+    essay_plagiarisms = EssayPlagiarism.objects.filter(task_group=group_index)
+    for essay_plagiarism in essay_plagiarisms:
+        essay1 = Essay.objects.get(id=essay_plagiarism.essay1)
+        essay2 = Essay.objects.get(id=essay_plagiarism.essay2)
+        results.append({
+            'id': essay_plagiarism.id,
+            'essay1_id' :essay1.id,
+            'essay1_name': essay1.title,
+            'essay1_author':essay1.author.name,
+            'essay2_id' :essay2.id,
+            'essay2_name': essay2.title,
+            'essay2_author':essay2.author.name,
+            'avg': essay_plagiarism.get_plagiarism,
+            'verified_on' : essay_plagiarism.date
+        })
+
+    return render(request, 'palgiarism.html', {
+        'title': f'Palgio en grupo de tarea: {task_group.name}',
+        'results': results,
+    })
+
+       
+
+
+    
+
+
+
+def compute_jaccard(sentence1, sentence2):
+    words_in_sentence1 = set(sentence1.split(" "))
+    words_in_sentence2 = set(sentence2.split(" "))    
+    return len(words_in_sentence1 & words_in_sentence2) / len(words_in_sentence1 | words_in_sentence2)
 
  

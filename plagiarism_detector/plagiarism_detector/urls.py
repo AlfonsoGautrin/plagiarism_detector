@@ -24,6 +24,7 @@ urlpatterns = [
     path('essays', include('essays.urls')),
     path('usuarios', include('usuarios.urls')),
     path('task-group', include('task_group.urls')),
+    path('authors', include('authors.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('usuarios.urls')),
     path('', SignUpView)

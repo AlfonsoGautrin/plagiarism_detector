@@ -29,19 +29,22 @@
                     <div class="form-group">
                         <h5>Grupo de Tarea</h5>
                             
-                        <select class="form-control" name="task_group" id="select" >
+                        <select class="form-control" name="task_group">
                             {% for task_group in task_groups %}
                             <option value="{{ task_group.id }}">{{ task_group.name }}</option>
                             {% endfor %}
-                            </select>
+                        </select>
                 </div>
                </div>
 
                 <div class="col-4">
                     <div class="form-group">
                         <h5>Autor</h5>
-                       <input type="text" class="form-control form-control-user" name="author"
-                           placeholder="Ingresa autor" value="{{essay.author}}" >
+                        <select class="form-control" name="author" >
+                            {% for author in authors %}
+                            <option value="{{ author.id }}">{{ author.name }}</option>
+                            {% endfor %}
+                        </select>
                    </div>
                 </div>
             

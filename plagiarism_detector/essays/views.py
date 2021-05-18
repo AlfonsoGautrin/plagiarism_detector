@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 import datetime
 from .models import Essay,TaskGroup
+from authors.models import Author
 
 
 # Create your views here.
@@ -19,9 +21,11 @@ def index(request):
 def create(request):
     if request.user.is_authenticated :
         task_groups = TaskGroup.objects.all()
+        authors = Author.objects.all()
         return render(request, 'form.html', {
             'title': 'Crear Ensayo',
             'task_groups': task_groups,
+            'authors':authors,
             'index': -1
         })
     else :
@@ -32,10 +36,12 @@ def edit(request, essay_index: int):
     if request.user.is_authenticated :
         essay = Essay.objects.get(id=essay_index)
         task_groups = TaskGroup.objects.all()
+        authors = Author.objects.all()
         return render(request, 'form.html', {
             'title': 'Editar Ensayo',
             'essay': essay,
             'task_groups': task_groups,
+            'authors':authors,
             'index': essay_index
         })
     else :
@@ -70,11 +76,15 @@ def save(request):
         now = datetime.date.today()
         if id == -1:
 
+
+            instance = TaskGroup.objects.get(id=int(request.POST['task_group']))
+            author = Author.objects.get(id=int(request.POST['author']))
             essay = Essay(
                 title=request.POST['title'],
-                author=request.POST['author'],
                 content=request.POST['content'],
-                date=now
+                author=author,
+                date=now,
+                task_group=instance
             )
 
             essay.save()
@@ -86,6 +96,7 @@ def save(request):
             essay.author = request.POST['author'],
             essay.content = request.POST['content'],
             essay.date = now
+            essay.task_group=int(request.POST['task_group'])
             essay.save()
             messages.success(request, 'Ensayo Editado Correctamente')
 
