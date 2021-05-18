@@ -35,7 +35,7 @@
                     <tbody>
                     {% for essay in essays %}
                         <tr>
-                            <td>{{ essay.id }}</td>
+                            <td>{{ forloop.counter }}</td>
                             <td>{{ essay.title }}</td>
                             <td>{{ essay.author.name }}</td>
                             <td>{{ essay.task_group.name }}</td>

@@ -11,8 +11,7 @@ def index(request):
     if request.user.is_authenticated:
        
         rows = []
-        groups = TaskGroup.objects.all()
-
+        groups = TaskGroup.objects.filter(user=request.user.id)
         for group in groups:
             essays = Essay.objects.filter(task_group=group.id)
             rows.append({
@@ -71,6 +70,7 @@ def save(request):
             task_group = TaskGroup(
                 name=request.POST['name'],
                 created_at=now,
+                user=request.user
             )
             task_group.save()
             messages.success(request, 'Grupo de Tarea Creado Creada Correctamente')
@@ -95,20 +95,21 @@ def verify(request,group_index: int):
     for essay in essays:
         for essay2 in essays:
             if essay.id != essay2.id:
-                combination = f'{essay.id}{essay2.id}'
+                combination = [essay.id,essay2.id]
                 if not combination in combinations:
                     plagiarism = EssayPlagiarism(
                         essay1=essay.id,
                         essay2=essay2.id,
                         task_group=task_group,
-                        
                     )
                     plagiarism.compute_jaccard()
                     plagiarism.save()
                     
                     combination = combination[::-1]
+                    
                     combinations.append(combination)
     
+   
     results = []
     essay_plagiarisms = EssayPlagiarism.objects.filter(task_group=group_index)
     for essay_plagiarism in essay_plagiarisms:

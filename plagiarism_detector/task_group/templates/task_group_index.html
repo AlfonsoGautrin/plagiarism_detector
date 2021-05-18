@@ -34,7 +34,7 @@
                     <tbody>
                     {% for row in rows %}
                         <tr>
-                            <td>{{ row.id }}</td>
+                            <td>{{ forloop.counter }}</td>
                             <td>{{ row.name }}</td>
                             <td>{{ row.essays_size }}</td>
                             <td>{{ row.created_at }}</td>

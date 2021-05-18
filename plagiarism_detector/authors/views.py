@@ -8,7 +8,7 @@ from .models import Author
 
 def index(request):
     if request.user.is_authenticated:
-        authors = Author.objects.all()
+        authors = Author.objects.filter(user=request.user.id)
         return render(request, 'authors_index.html', {
             'authors': authors
         })
@@ -58,6 +58,7 @@ def save(request):
             author = Author(
                 name=request.POST['name'],
                 created_at=now,
+                user=request.user
             )
             author.save()
             messages.success(request, 'Autor Creado Correctamente')

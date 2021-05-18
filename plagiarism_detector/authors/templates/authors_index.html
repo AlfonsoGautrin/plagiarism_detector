@@ -33,7 +33,7 @@
                     <tbody>
                     {% for author in authors %}
                         <tr>
-                            <td>{{ author.id }}</td>
+                            <td>{{ forloop.counter }}</td>
                             <td>{{ author.name }}</td>
                             <td>{{ author.created_at }}</td>
                             <td>

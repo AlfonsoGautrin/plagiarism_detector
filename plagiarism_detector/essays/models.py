@@ -1,6 +1,7 @@
 from django.db import models
 from task_group.models import TaskGroup
 from authors.models import Author
+from usuarios.models import Usuario
 
 # Create your models here.
 class Essay(models.Model):
@@ -9,6 +10,7 @@ class Essay(models.Model):
     author = models.ForeignKey(Author, null=False, on_delete=models.CASCADE, default=-1)
     date = models.DateField(null=True, blank=True)
     task_group = models.ForeignKey(TaskGroup, null=False, on_delete=models.CASCADE, default=-1)
+    user = models.ForeignKey(Usuario, null=True, on_delete=models.CASCADE)
 
 def getDateFormated(self):
     return self.date.strftime(' %d-%m-%Y')

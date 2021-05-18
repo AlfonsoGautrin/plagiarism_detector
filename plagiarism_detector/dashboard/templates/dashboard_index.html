@@ -83,17 +83,24 @@
                     </div>
                     <!-- Card Body -->
                     <div class="card-body" style="margin: 3rem;">
+                    
+                        {% if rows_len == 0  %}
+                            <h6 class="m-0 font-weight-bold text-secondary">No hay datos.</h6>
+
+                        {% else %}
+                            {% for row in rows %}
+                                <!-- Project Card Example -->
+                                <h4 class="small font-weight-bold">{{row.name}}<span
+                                    class="float-right"><span class="font-weight-bold text-success">{{row.avg}}%</span>  {{row.len}} Ensayos en este grupo de un total de {{ essay_len }}</span></h4>
+                                <div class="progress mb-4">
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: {{row.avg}}%"
+                                        aria-valuenow="{{row.avg}}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            
+                            {% endfor %}
+                        {% endif %}
                           
-                        {% for row in rows %}
-                            <!-- Project Card Example -->
-                            <h4 class="small font-weight-bold">{{row.name}}<span
-                                class="float-right"><span class="font-weight-bold text-success">{{row.avg}}%</span>  {{row.len}} Ensayos en este grupo de un total de {{ essay_len }}</span></h4>
-                            <div class="progress mb-4">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{row.avg}}%"
-                                    aria-valuenow="{{row.avg}}" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                        
-                        {% endfor %}
+                       
                 
                     </div>
                 </div>

@@ -10,7 +10,7 @@ from authors.models import Author
 
 def index(request):
     if request.user.is_authenticated:
-        essays = Essay.objects.all()
+        essays = Essay.objects.filter(user=request.user.id)
         return render(request, 'index.html', {
             'essays': essays
         })
@@ -20,8 +20,8 @@ def index(request):
 
 def create(request):
     if request.user.is_authenticated :
-        task_groups = TaskGroup.objects.all()
-        authors = Author.objects.all()
+        task_groups = TaskGroup.objects.filter(user=request.user.id)
+        authors = Author.objects.filter(user=request.user.id)
         return render(request, 'form.html', {
             'title': 'Crear Ensayo',
             'task_groups': task_groups,
@@ -35,8 +35,8 @@ def create(request):
 def edit(request, essay_index: int):
     if request.user.is_authenticated :
         essay = Essay.objects.get(id=essay_index)
-        task_groups = TaskGroup.objects.all()
-        authors = Author.objects.all()
+        task_groups = TaskGroup.objects.filter(user=request.user.id)
+        authors = Author.objects.filter(user=request.user.id)
         return render(request, 'form.html', {
             'title': 'Editar Ensayo',
             'essay': essay,
@@ -83,9 +83,9 @@ def save(request):
                 content=request.POST['content'],
                 author=author,
                 date=now,
-                task_group=task_group
+                task_group=task_group,
+                user=request.user
             )
-
             essay.save()
             messages.success(request, 'Ensayo Creado Correctamente')
 
