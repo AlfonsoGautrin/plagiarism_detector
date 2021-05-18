@@ -77,7 +77,7 @@ def save(request):
 
         else:
             task_group = TaskGroup.objects.filter(id=id).first()
-            task_group.name=request.POST['name'],
+            task_group.name=request.POST['name']
             task_group.created_at=now
             task_group.save()
             messages.success(request, 'Grupo de Tarea Editado Correctamente')

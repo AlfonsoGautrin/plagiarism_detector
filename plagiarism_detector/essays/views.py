@@ -74,17 +74,16 @@ def save(request):
     if request.user.is_authenticated :
         id = int(request.POST['essay_id'])
         now = datetime.date.today()
+        author = Author.objects.get(id=int(request.POST['author']))
+        task_group = TaskGroup.objects.get(id=int(request.POST['task_group']))
         if id == -1:
-
-
-            instance = TaskGroup.objects.get(id=int(request.POST['task_group']))
-            author = Author.objects.get(id=int(request.POST['author']))
+            
             essay = Essay(
                 title=request.POST['title'],
                 content=request.POST['content'],
                 author=author,
                 date=now,
-                task_group=instance
+                task_group=task_group
             )
 
             essay.save()
@@ -92,11 +91,11 @@ def save(request):
 
         else:
             essay = Essay.objects.filter(id=id).first()
-            essay.title = request.POST['title'],
-            essay.author = request.POST['author'],
-            essay.content = request.POST['content'],
+            essay.title = request.POST['title']
+            essay.author = author
+            essay.content = request.POST['content']
             essay.date = now
-            essay.task_group=int(request.POST['task_group'])
+            essay.task_group=task_group
             essay.save()
             messages.success(request, 'Ensayo Editado Correctamente')
 
