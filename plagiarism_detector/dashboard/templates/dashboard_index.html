@@ -1,0 +1,107 @@
+{% extends "main.html" %}
+
+
+{% block main-content %}
+
+  
+    <div class="container-fluid">
+        
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">{{title}}</h1>
+        </div>
+
+        <div class="row">
+
+            <!-- Ensayos -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
+                                    Ensayos ( TOTAL )</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ essay_len }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-file-alt fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Grupo De Tareas -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-m font-weight-bold text-success text-uppercase mb-1">
+                                    Grupo De Tareas ( TOTAL )</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ task_groups_len }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-grip-vertical fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Autores -->
+            <div class="col-xl-4 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-m font-weight-bold text-warning text-uppercase mb-1">
+                                    Autores ( TOTAL )</div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">{{ author_len }}</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-grip-vertical fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <!-- Area Chart -->
+            <div class="col-xl-12 col-lg-12">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h5 class="m-0 font-weight-bold text-primary">Cantidad de Ensayos De Los Ultimos Grupos de Tareas </h5>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body" style="margin: 3rem;">
+                          
+                        {% for row in rows %}
+                            <!-- Project Card Example -->
+                            <h4 class="small font-weight-bold">{{row.name}}<span
+                                class="float-right"><span class="font-weight-bold text-success">{{row.avg}}%</span>  {{row.len}} Ensayos en este grupo de un total de {{ essay_len }}</span></h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: {{row.avg}}%"
+                                    aria-valuenow="{{row.avg}}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        
+                        {% endfor %}
+                
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+
+{% endblock %}
+
+

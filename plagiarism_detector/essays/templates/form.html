@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <h5>Titulo</h5>
                         <input type="text" class="form-control form-control-user" name="title"
-                            placeholder="Ingresa titulo" value="{{essay.title}}">
+                            placeholder="Ingresa titulo" value="{{essay.title}}" required>
                     </div>
                </div>
 
@@ -31,7 +31,13 @@
                             
                         <select class="form-control" name="task_group">
                             {% for task_group in task_groups %}
-                            <option value="{{ task_group.id }}">{{ task_group.name }}</option>
+
+                                {% if essay.task_group.id == task_group.id %}
+                                    <option value="{{ task_group.id }}" selected>{{ task_group.name }}</option>
+                                {% else %}
+                                    <option value="{{ task_group.id }}">{{ task_group.name }}</option>
+                                {% endif %}
+                            
                             {% endfor %}
                         </select>
                 </div>
@@ -42,6 +48,12 @@
                         <h5>Autor</h5>
                         <select class="form-control" name="author" >
                             {% for author in authors %}
+
+                                {% if essay.author.id == author.id %}
+                                    <option value="{{ author.id }}" selected>{{ author.name }}</option>
+                                {% else %}
+                                    <option value="{{ author.id }}">{{ author.name }}</option>
+                                {% endif %}
                             <option value="{{ author.id }}">{{ author.name }}</option>
                             {% endfor %}
                         </select>
@@ -52,7 +64,7 @@
             <!-- Card Body -->
             <div class="card-body">
                  <h5>Contenido</h5>
-            <textarea name="content">{{essay.content}}</textarea>
+            <textarea name="content" required>{{essay.content}}</textarea>
 
             <div class="py-3 d-flex flex-row align-items-center justify-content-between">
             <button class="btn btn-success" type="submit">Guardar</button>

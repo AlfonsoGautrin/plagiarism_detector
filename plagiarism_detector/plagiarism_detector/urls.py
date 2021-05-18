@@ -22,6 +22,7 @@ from usuarios.views import SignUpView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('essays', include('essays.urls')),
+    path('dashboard', include('dashboard.urls')),
     path('usuarios', include('usuarios.urls')),
     path('task-group', include('task_group.urls')),
     path('authors', include('authors.urls')),
