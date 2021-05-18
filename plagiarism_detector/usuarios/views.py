@@ -50,7 +50,7 @@ def SignUpView(request):
             return redirect('login')
         return render(request, 'registration/signup.html', {'error':False})
     else:
-        return redirect('essays.index')
+        return redirect('dashboard.index')
 
 
 def check_passwords(password1, password2) :

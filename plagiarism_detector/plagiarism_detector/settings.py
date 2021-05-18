@@ -117,7 +117,7 @@ AUTH_USER_MODEL = 'usuarios.Usuario'
 
 LANGUAGE_CODE = 'es-mx'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'MST'
 
 USE_I18N = True
 
@@ -132,7 +132,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #URLs que usa el login y el logout
-LOGIN_REDIRECT_URL = '/essays'
+LOGIN_REDIRECT_URL = 'dashboard.index'
 LOGOUT_REDIRECT_URL = 'login'
 
 #URL Para acceder a las imagenes
