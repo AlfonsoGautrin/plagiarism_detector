@@ -86,6 +86,7 @@ def save(request):
         return redirect('login')
 
 def verify(request,group_index: int):
+    EssayPlagiarism.objects.all().delete()
     task_group = TaskGroup.objects.filter(id=group_index).first()
     essays = Essay.objects.filter(task_group=group_index)
     now = datetime.date.today()

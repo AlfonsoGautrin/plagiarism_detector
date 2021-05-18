@@ -17,7 +17,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Se muestra un listado de de ensayos que contienen plagio</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Se muestra un listado de ensayos con el porcentaje de plagio que contienen</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -35,7 +35,7 @@
                     <tbody>
                     {% for result in results %}
                         <tr>
-                            <td>{{ result.id }}</td>
+                            <td>{{ forloop.counter }}</td>
                             <td><span class="text-primary font-weight-bold">{{ result.essay1_name }}</span> {{ result.essay1_author }}</td>
                             <td><span class="text-primary font-weight-bold">{{ result.essay2_name }}</span> {{ result.essay2_author }}</td>
                             <td>{{ result.avg }}</td>
