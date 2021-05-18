@@ -18,7 +18,7 @@ class EssayPlagiarism(models.Model) :
     essay2 = models.IntegerField(null=True)
     task_group = models.ForeignKey(TaskGroup, null=False, on_delete=models.CASCADE, default=-1)
     plagiarism = models.DecimalField(max_digits=100, decimal_places=2)
-    date = models.DateField()
+    date = models.DateTimeField(auto_now_add=True)
     
     def get_plagiarism(self):
         return f'{self.plagiarism * 100}%' 

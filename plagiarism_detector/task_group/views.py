@@ -100,7 +100,7 @@ def verify(request,group_index: int):
                         essay1=essay.id,
                         essay2=essay2.id,
                         task_group=task_group,
-                        date=now,
+                        
                     )
                     plagiarism.compute_jaccard()
                     plagiarism.save()
@@ -129,17 +129,3 @@ def verify(request,group_index: int):
         'title': f'Palgio en grupo de tarea: {task_group.name}',
         'results': results,
     })
-
-       
-
-
-    
-
-
-
-def compute_jaccard(sentence1, sentence2):
-    words_in_sentence1 = set(sentence1.split(" "))
-    words_in_sentence2 = set(sentence2.split(" "))    
-    return len(words_in_sentence1 & words_in_sentence2) / len(words_in_sentence1 | words_in_sentence2)
-
- 
