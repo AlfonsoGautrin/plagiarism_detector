@@ -86,23 +86,27 @@ def save(request):
         return redirect('login')
 
 def verify(request,group_index: int):
-    EssayPlagiarism.objects.all().delete()
     task_group = TaskGroup.objects.filter(id=group_index).first()
     essays = Essay.objects.filter(task_group=group_index)
     now = datetime.date.today()
+
+    combinations = []
     for essay in essays:
         for essay2 in essays:
             if essay.id != essay2.id:
-                avg = compute_jaccard(essay.content,essay2.content)
-                if avg >= 0.0:
+                combination = f'{essay.id}{essay2.id}'
+                if not combination in combinations:
                     plagiarism = EssayPlagiarism(
                         essay1=essay.id,
                         essay2=essay2.id,
                         task_group=task_group,
-                        plagiarism=avg,
                         date=now,
                     )
+                    plagiarism.compute_jaccard()
                     plagiarism.save()
+                    
+                    combination = combination[::-1]
+                    combinations.append(combination)
     
     results = []
     essay_plagiarisms = EssayPlagiarism.objects.filter(task_group=group_index)
