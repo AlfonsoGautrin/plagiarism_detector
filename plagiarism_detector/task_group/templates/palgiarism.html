@@ -9,9 +9,6 @@
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ title }}</h1>
-        <a href="{% url 'essays.create'%}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
-            <i class="fas fa-plus text-white-50" style="margin-right: 15px"> </i>Crear Nuevo
-        </a>
     </div>
 
     <!-- DataTales Example -->
@@ -64,6 +61,7 @@
       document.addEventListener("DOMContentLoaded", function(event) {
             $('#dataTable').DataTable({
                 responsive: true,
+                "lengthMenu": [[5, 10, 15, 20], [5, 10, 5, 20]],
                 language : {
                     sProcessing: "Procesando...",
                     sLengthMenu: "Mostrar _MENU_ registros",
